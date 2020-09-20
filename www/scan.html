@@ -23,52 +23,51 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-top">
   <div class="w3-bar w3-blue-grey w3-card w3-left-align w3-small">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-left w3-padding-large w3-hover-white w3-large w3-blue-grey" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="myHome.html" class="w3-bar-item w3-button w3-padding-large w3-blue-grey"><i class="fa fa-home fa-2x w3-padding-10 w3-text-white"></i></a>
-    <a href="retreive.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">My Card</a>
-    <a href="mycode.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">My Code</a>
-    <a href="scan.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Scan</a>
-
-
+    <a href="home.html" class="w3-bar-item w3-button w3-padding-large w3-blue-grey"><i class="fa fa-home fa-2x w3-padding-10 w3-text-white"></i></a>
+    <a href="viewSets.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">View Sets</a>
+    <a href="updatSet.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Update Set</a>
+    <a href="clear.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Clear</a>
+    <a href="replace.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Replace or Add Wheel</a>
 
   </div>
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="retreive.html" class="w3-bar-item w3-button w3-padding-large">My Card</a>
-    <a href="mycode.html" class="w3-bar-item w3-button w3-padding-large">My Code</a>
-    <a href="scan.html" class="w3-bar-item w3-button w3-padding-large">Scan</a>
+    <a href="viewSets.html" class="w3-bar-item w3-button w3-padding-large">View Sets</a>
+    <a href="updateSet.html" class="w3-bar-item w3-button w3-padding-large">Update Set</a>
+    <a href="clear.html" class="w3-bar-item w3-button w3-padding-large">Clear</a>
+    <a href="replace.html" class="w3-bar-item w3-button w3-padding-large">Replace or Add Wheel</a>
 
   </div>
 </div>
 
-<div id="row1">
-    <div class="w3-display-topright">
+<h1>Welcome</h1>
+<div id="row1" hidden="true">
+    <div class="row">
         <div class="column">
-         </br>
-         </br>
-         </br>
+            <img src="img/placeholder.png" alt="placeholder">
+        </div>
+        <div class="column">
+          <i id="PfullName"></i></br>
+          <i id="PdateOfBirth"></i></br>
+          <i id="PbloodType"></i></br>
     </div>
   </div>
 </div>  
-         </br>
-         </br>
-         </br>
- <label for="wheel">Patient MyCode</label><br>
-                <input type="number" id="wheelNumber" name="wheelNumber" value=""></br></br>
-                <button  class="mainButton" onclick="getWheel()">Search</button>
 
-  <div id="myHomeButtons">
-    <div class="row">
-        <div class="column">
-            <a href="retreive.html"><button class="w3-display-bottomleft" id="myHomeButton1">My Card</button></a>
-        </div>
-        <div class="column">
-            <a href="mycode.html"><button class="w3-display-bottomright" id="myHomeButton2">My Code</button></a>
-        </div>
-    </div>
-  </div>
 
-</body>
+<div id="row2" class="w3-display-left" hidden="true">
+          <h2>Medical Information</h2>
+          <i id="PmedInfo1"></i></br>
+          <i id="PmedInfo2"></i></br>
+          <i id="PmedInfo3"></i></br>
+</div>
+<input type="text" id="PID"></br>
+ <button class="mainButton" onclick="myPFunction()">Get Data</button>
+ 
+
+<img id="qrimage"src="img/QrImage.png" onclick="pateintScan()" class="w3-display-bottommiddle" alt="scan_image">
+
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button
 function myFunction() {
@@ -80,5 +79,16 @@ function myFunction() {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function(event) {
+
+})
+
+
+
+
 </script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+</body>
 </html>
