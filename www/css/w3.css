@@ -152,7 +152,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .w3-light-blue,.w3-hover-light-blue:hover{color:#000!important;background-color:#87CEEB!important}
 .w3-brown,.w3-hover-brown:hover{color:#fff!important;background-color:#795548!important}
 .w3-cyan,.w3-hover-cyan:hover{color:#000!important;background-color:#00bcd4!important}
-.w3-blue-grey,.w3-hover-blue-grey:hover,.w3-blue-gray,.w3-hover-blue-gray:hover{color:#fff!important;background-color:#0f3e65!important}
+.w3-blue-grey,.w3-hover-blue-grey:hover,.w3-blue-gray,.w3-hover-blue-gray:hover{color:#fff!important;background-color:#FCD94B!important}
 .w3-green,.w3-hover-green:hover{color:#fff!important;background-color:#4CAF50!important}
 .w3-light-green,.w3-hover-light-green:hover{color:#000!important;background-color:#8bc34a!important}
 .w3-indigo,.w3-hover-indigo:hover{color:#fff!important;background-color:#3f51b5!important}
@@ -182,7 +182,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .w3-text-light-blue,.w3-hover-text-light-blue:hover{color:#87CEEB!important}
 .w3-text-brown,.w3-hover-text-brown:hover{color:#795548!important}
 .w3-text-cyan,.w3-hover-text-cyan:hover{color:#00bcd4!important}
-.w3-text-blue-grey,.w3-hover-text-blue-grey:hover,.w3-text-blue-gray,.w3-hover-text-blue-gray:hover{color:#0f3e65!important}
+.w3-text-blue-grey,.w3-hover-text-blue-grey:hover,.w3-text-blue-gray,.w3-hover-text-blue-gray:hover{color:#FCD94B!important}
 .w3-text-green,.w3-hover-text-green:hover{color:#4CAF50!important}
 .w3-text-light-green,.w3-hover-text-light-green:hover{color:#8bc34a!important}
 .w3-text-indigo,.w3-hover-text-indigo:hover{color:#3f51b5!important}
@@ -250,14 +250,73 @@ div.form
     text-align: left;
 }
 
-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+
+
+#myHomeButton1 {
+  background-color:#FCD94B;
+  font-size: 24px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 14px 28px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  width:50%;
+  display:inline-block;
+}
+
+#myHomeButton2 {
+  background-color:#FFF;
+  font-size: 24px;
+  border: none; /* Remove borders */
+  color: #FCD94B; /* Add a text color */
+  padding: 14px 28px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  width:50%;
+  display:inline-block;
+}
+
+#loginButton {
+  background-color:#FCD94B;
+  font-size: 24px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 14px 28px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  width:100%;
+  display:inline-block;
+}
+#logoutButton {
+  background-color:#FCD94B;
   font-size: 12px;
-  border-radius: 8px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 7px 14px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  display:inline-block;
+}
+
+#logo {
+   position: absolute;
+   width:80%;
+   top: 40%;
+   left:10%;
+
+}
+
+#loginLogo {
+   position: absolute;
+   width:80%;
+   bottom: 0%;
+   left:10%;
+
+}
+
+#qrcode{
+  padding: 15px;
+  border-style: solid;
+  border-width: thick;
+
+}
+
+#patientImage{
+	width:90%;
 }

@@ -1,35 +1,109 @@
 //Initialising connection to backendless
-Backendless.initApp('2CBB3466-D2B0-8A99-FF07-EF6335B4F800', '7309E6CF-B2DB-4B79-979B-1F070328A49D' );
+Backendless.initApp('DA177622-8268-9292-FF7D-A1E6BFE66100', 'DA98CD2A-640F-4863-96E9-E796101DBDD3' );
+
 const PAGE_SIZE = 80
 
 const dataQuery = Backendless.DataQueryBuilder.create().setPageSize(PAGE_SIZE)
 //---------------------------------------------------------------------------------------------------
 
-
-//-------Event Listeners and actions-------------------//
-document.addEventListener("DOMContentLoaded", function() {
-    //getPrinters();
-	//getPractices();
-	//getDropdown();
-
-});
+var loggedIn = false;
 
 
+function homeScreen(){
+	if (loggedIn==false){
+		document.getElementById("topBarHomeButton").style.display = "none";
+		document.getElementById("topBarMyCodeButton").style.display = "none";
+		document.getElementById("topBarMyCardButton").style.display = "none";
+		document.getElementById("StopBarMyCodeButton").style.display = "none";
+		document.getElementById("StopBarMyCardButton").style.display = "none";
+	}
 
-//-----Creation of Practices, Devices and Printers-----------//
-function addWheel(){
-	var wheelNo = document.getElementById("wheelNumber").value;
+}
+
+
+function register(){
+var name= document.getElementById("name").value;
+var email=  document.getElementById("email").value;
+var password=  document.getElementById("password").value;
+
+
+function userRegistered( user )
+{
+  console.log( "user has been registered" );
+  Backendless.UserService.logout()
+ .then( function() {
+  })
+ .catch( function( error ) {
+  });
+  window.location.href = "myHome.html";
+}
+
+function gotError( err ) // see more on error handling
+{
+  console.log( "error message - " + err.message );
+  console.log( "error code - " + err.statusCode );
+}
+
+var user = new Backendless.User();
+user.name=name;
+user.email = email;
+user.password = password;
+
+Backendless.UserService.register( user ).then( userRegistered ).catch( gotError );
+	
+}
+
+function login(){
+
+var login=  document.getElementById("email").value;
+var password=  document.getElementById("password").value;
+
+function userLoggedIn( user )
+{
+  console.log( "user has logged in" );
+  window.location.href = "myHome.html";
+}
+
+function gotError( err ) // see more on error handling
+{
+  console.log( "error message - " + err.message );
+  console.log( "error code - " + err.statusCode );
+}
+
+Backendless.UserService.login( login, password, true )
+ .then( userLoggedIn )
+ .catch( gotError );
+}
+
+
+function uploadMedical(){
+	var firstName = document.getElementById("firstName").value;
+	var lastName = document.getElementById("lastName").value;
+	var dateOfBirth = document.getElementById("dateOfBirth").value;
+	var bloodType = document.getElementById("bloodType").value;
+	var medicalInformation1 = document.getElementById("medicalInformation1").value;
+	var medicalInformation2 = document.getElementById("medicalInformation2").value;
+	var medicalInformation3 = document.getElementById("medicalInformation3").value;
+	var medicalInformation4 = document.getElementById("medicalInformation4").value;
+	var medicalInformation5 = document.getElementById("medicalInformation5").value;
 
 	
-	var Wheelentry = {
-        wheelNumber: wheelNo
-
+	var patientEntry = {
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth,
+        bloodType: bloodType,
+        medicalInfo1: medicalInformation1,
+        medicalInfo2: medicalInformation2,
+        medicalInfo3: medicalInformation3,
+        medicalInfo4: medicalInformation4,
+        medicalInfo5: medicalInformation5
     }
 	
-Backendless.Data.of( "wheel" ).save( Wheelentry )
+Backendless.Data.of( "patient" ).save( patientEntry )
   .then( function( savedObject ) {
-  	  document.getElementById("wheelNumber").value ="";
-      console.log( "Wheel Added" );
+  	 
+      console.log( "Patient Added" );
     })
   .catch( function( error ) {
       console.log( "an error has occurred " + error.message );
@@ -37,171 +111,28 @@ Backendless.Data.of( "wheel" ).save( Wheelentry )
 
 }
 
-
-
-
-//Function to add a practice to backendless
-function createSet(){
-	var setString = document.getElementById("setNo").value;
-	var wheelNoString = document.getElementById("wheelNumber").value;
-	var tpmNoString = document.getElementById("tpmNumber").value;
-	var position = document.getElementById("postion").value;
-
-	var wheelNo = parseInt(wheelNoString, 10);
-	var tpmNo = parseInt(tpmNoString, 10);
-	var set = parseInt(setString,10)
-	var setTable="set"+ set;
-
-	console.log(set);
-
-	var setEntry = {
-		set_no: set,
-        wheel_No: wheelNo,
-        tpm_no: tpmNo,
-        position: position,
-    }
-    Backendless.Data.of( setTable ).save( setEntry )
-  .then( function( savedObject ) {
-  	  document.getElementById("wheelNumber").value ="";
-
-      console.log( "Set Added" );
-      alert("Added to set "+ set)
-      location.reload();
-    })
-  .catch( function( error ) {
-      console.log( "an error has occurred " + error.message );
-    });
-
+function test(){
+	var userObjectId = Backendless.LocalCache.get("current-user-id");
+	alert(userObjectId);
 }
 
 
+function getMedical(){
 
-//----End of creation section------------------------------------------------------------------------//
-
-
-//----Start of Retreival Section -------------------------------------------------------------------//
-
-
-//Function to get the drop down lists on each page
-
-function getSet() {
-	var searchSet = document.getElementById("setNo").value;
-	//var wheelNumber = document.getElementById("wheelNumber").value
-	//var whereClause = "wheel_no = '" + wheelNumber + "'";
-	var queryBuilder = Backendless.DataQueryBuilder.create();queryBuilder.setSortBy( ["position DESC" ] );
-	//queryBuilder.setPageSize( 50 );
-    Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-    x=2
+	var userObjectId = Backendless.LocalCache.get("current-user-id");
+	var whereClause = "ownerId = '" + userObjectId + "'";
+    var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
+    Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
 
     function processSetResults(devices){
-    	var table = document.getElementById("table");
 
-		for(var i = table.rows.length - 1; i > 0; i--)
-		{
-			table.deleteRow(i);
-		}
-
-
-
-
-	for (var i = 0; i < devices.length; i++){
-		var table = document.getElementById("table");
-		
-		
-		var row = table.insertRow(1);
-		var cell5 = row.insertCell(0);
-		var cell4 = row.insertCell(0);
-		var cell3 = row.insertCell(0);
-		var cell2 = row.insertCell(0);
-		var cell1 = row.insertCell(0);
-		cell1.innerHTML = devices[i].position;
-		cell2.innerHTML = devices[i].wheel_no;
-		cell3.innerHTML = devices[i].tpm_no;
-		cell4.innerHTML = devices[i].tyre_no;
-		cell5.innerHTML = devices[i].weight;
-	}
-	
-}
-
-function error(err) {
-        alert("fail: " + error);
-    }
-	
-//
-}
-
-function getWheel() {
-	var searchSet = "set1";
-	var wheelNumber = document.getElementById("wheelNumber").value
-	var whereClause = "wheel_no = '" + wheelNumber + "'";
-	var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
-	queryBuilder.setPageSize( 50 );
-    Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-    x=2
-
-    function processSetResults(devices){
-    	var table = document.getElementById("table");
-
-		for(var i = table.rows.length - 1; i > 0; i--)
-		{
-			table.deleteRow(i);
-		}
-
-	if (devices.length < 1 && x == 2 ){
-		searchSet="set2";
-		Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-		x++;
-		
-	} else if (devices.length < 1 && x == 3 ){
-		searchSet="set3";
-		Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-		x++;
-	}
-	else if (devices.length < 1 && x == 4 ){
-		searchSet="set4";
-		Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-		x++;
-	}
-	else if (devices.length < 1 && x == 5 ){
-		searchSet="set5";
-		Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-		x++;
-
-	}
-	else if (devices.length < 1 && x == 6 ){
-		searchSet="set6";
-		Backendless.Data.of(searchSet).find(queryBuilder).then(processSetResults).catch(error);
-		x++;
-	}
-		else if (devices.length < 1 && x == 7 ){
-			swal("Uh Oh!", "Wheel not associated with any set", "error");
-	}
-		 
-
-
-
-
-	for (var i = 0; i < devices.length; i++){
-		var obID = devices[i].objectId;
-		var foundSet = devices[i].set_no;
-		document.getElementById('obID').innerHTML = obID;
-		document.getElementById('foundSet').innerHTML = foundSet;
-		var table = document.getElementById("table");
-		
-		
-		var row = table.insertRow(1);
-		var cell6 = row.insertCell(0);
-		var cell5 = row.insertCell(0);
-		var cell4 = row.insertCell(0);
-		var cell3 = row.insertCell(0);
-		var cell2 = row.insertCell(0);
-		var cell1 = row.insertCell(0);
-		cell1.innerHTML = devices[i].set_no;
-		cell2.innerHTML = devices[i].wheel_no;
-		cell3.innerHTML = devices[i].position;
-		cell4.innerHTML = devices[i].tpm_no;
-		cell5.innerHTML = devices[i].tyre_no;
-		cell6.innerHTML = devices[i].weight;
+		for (var i = 0; i < devices.length; i++){
+		document.getElementById("PdateOfBirth").innerHTML=devices[i].dateOfBirth;
+		document.getElementById("PfullName").innerHTML=devices[i].firstName + " " + devices[i].lastName;
+		document.getElementById("PbloodType").innerHTML=devices[i].bloodType;
+		document.getElementById("PmedInfo1").innerHTML=devices[i].medicalInfo1;
+		document.getElementById("PmedInfo2").innerHTML=devices[i].medicalInfo2;
+		document.getElementById("PmedInfo3").innerHTML=devices[i].medicalInfo3;
 	}
 	
 }
@@ -214,249 +145,140 @@ function error(err) {
 }
 
 
-function updateWheel(){
-
-
-	var obID = document.getElementById("obID").innerHTML;
-	var foundSet = document.getElementById("foundSet").innerHTML;
-	var updateSet = "set"+foundSet;
-	var tyreString = document.getElementById("tyreNumber").value;
-	var weightString = document.getElementById("weight").value;
-
-	var tyre = parseInt(tyreString,10);
-	var weight = parseFloat(weightString,10);
-	console.log(obID);
-
-    if (tyreString =='' && weightString !=''){
-		var wheelSet = {
-	    objectId:obID,
-	    weight:weight,
-		}
-
-		Backendless.Data.of( updateSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("tyreNumber").value = "";
-      	document.getElementById("weight").value = "";
-      	getWheel();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
-	else if (tyreString !='' && weightString ==''){
-		var wheelSet = {
-	    objectId:obID,
-	    tyre_no:tyre,
-		}
-
-		Backendless.Data.of( updateSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("tyreNumber").value = "";
-      	document.getElementById("weight").value = "";
-      	getWheel();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
-	else if (tyreString !='' && weightString !=''){
-		var wheelSet = {
-	    objectId:obID,
-	    tyre_no:tyre,
-	    weight:weight,
-		}
-
-		Backendless.Data.of( updateSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("tyreNumber").value = "";
-      	document.getElementById("weight").value = "";
-      	getWheel();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
+function getCode(){
+	var userObjectId = Backendless.LocalCache.get("current-user-id");
+	new QRCode(document.getElementById("qrcode"), userObjectId);
 
 }
 
-function clearSetWarning() {
-	var chosenSetNo = document.getElementById("ClrSetNo").value;
-	
-	swal("Are you sure you want to clear Set " + chosenSetNo +"?");
-	swal({
-		  title: "Are you sure you want to clear Set " + chosenSetNo +"?",
-		  text: "Once cleared, you will not be able to undo it!",
-		  icon: "warning",
-		  buttons: true,
-		  dangerMode: true,
-		})
-		.then((willDelete) => {
-		  if (willDelete) {
-		  	clearSet();
-		    swal("You have just cleared Set " + chosenSetNo , {
-		      icon: "success",
-		    });
-		  } else {
-		    swal("Ok no changes have been made");
-		  }
-		});
-		}
+function myPFunction() {
+  var txt;
+  swal("Enter Pin:", {
+  content: "input",
+  })
+  .then((value) => {
+  var PIN = value;
+    if (PIN == null || PIN == "") {
+    txt = "User cancelled the prompt.";
+  } else {
+    var PID = document.getElementById("PID").value;
+    var whereClause = "ownerId = '" + PID + "'";
+    var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
+    Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
 
-function clearSet(){
-	var chosenSet= "set" + document.getElementById("ClrSetNo").value;
-		Backendless.Data.of( chosenSet ).bulkUpdate( "position = position", { "tyre_no":null, "weight":null } )
-		  .then( function( objectsUpdated ) {
-		    console.log( "Server has updated " + objectsUpdated + " objects" );
-		  })
-		  .catch( function( error ) {
-		    console.log( "Server reported an error " + error );
-		  })
-
-}
-
-function totalClearSet(){
-	var chosenSet= "set" + document.getElementById("ClrSetNo").value;
-		Backendless.Data.of( chosenSet ).bulkUpdate( "position = position", { "tyre_no":null, "weight":null, "tpm_no":null, "wheel_no":null } )
-		  .then( function( objectsUpdated ) {
-		    console.log( "Server has updated " + objectsUpdated + " objects" );
-		    swal("Nice!", "You have just cleared "+ chosenSet , "success" )
-		  })
-		  .catch( function( error ) {
-		    console.log( "Server reported an error " + error );
-		  })
-
-}
-
-function getWheelInfo(){
-	if (setChosen == true){
-	var set = document.getElementById("setNo").value
-	var position = document.getElementById("position").value
-
-
-	var whereClause = "position = '" + position + "'";
-	var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
-	//queryBuilder.setPageSize( 50 );
-    Backendless.Data.of(set).find(queryBuilder).then(processSetResults).catch(error);
- 
 
     function processSetResults(devices){
-    	var table = document.getElementById("table");
+      
 
-		for(var i = table.rows.length - 1; i > 0; i--)
-		{
-			table.deleteRow(i);
-		}
+    for (var i = 0; i < devices.length; i++){
+    var intPPIN=parseInt(devices[i].patientPin);
+    var userPIN=parseInt(PIN);
 
+    if(userPIN==intPPIN){
+    document.getElementById("PdateOfBirth").innerHTML=devices[i].dateOfBirth;
+    document.getElementById("PfullName").innerHTML=devices[i].firstName + " " + devices[i].lastName;
+    document.getElementById("PbloodType").innerHTML=devices[i].bloodType;
+    document.getElementById("PmedInfo1").innerHTML=devices[i].medicalInfo1;
+    document.getElementById("PmedInfo2").innerHTML=devices[i].medicalInfo2;
+    document.getElementById("PmedInfo3").innerHTML=devices[i].medicalInfo3;
+    document.getElementById("row1").hidden=false;
+    document.getElementById("row2").hidden=false;
+    document.getElementById("qrimage").hidden=true;
+    document.getElementById("PID").hidden=true;
+  }else{swal("Uh oh!", "That is not the correct pin", "error");}
+  }
+  
 
+} 
 
-
-	for (var i = 0; i < devices.length; i++){
-		var obID = devices[i].objectId;
-		document.getElementById('obID').innerHTML = obID;
-		var table = document.getElementById("table");
-		
-		
-		var row = table.insertRow(1);
-		var cell6 = row.insertCell(0);
-		var cell5 = row.insertCell(0);
-		var cell4 = row.insertCell(0);
-		var cell3 = row.insertCell(0);
-		var cell2 = row.insertCell(0);
-		var cell1 = row.insertCell(0);
-		cell1.innerHTML = devices[i].set_no;
-		cell2.innerHTML = devices[i].position;
-		cell3.innerHTML = devices[i].wheel_no;
-		cell4.innerHTML = devices[i].tpm_no;
-		cell5.innerHTML = devices[i].tyre_no;
-		cell6.innerHTML = devices[i].weight;
-	}
-	document.getElementById("replaceInputs").hidden=false;
-	document.getElementById("footer").hidden=false;
-}
 
 function error(err) {
         alert("fail: " + error);
     }
+  
+//
+}
 
-		
 
-
-	} else {
-		document.getElementById("position").value=0;
-		 swal("Uh Oh", "You did not choose a set");
-
-	}
+  });
 
 }
 
-function replaceWheel(){
+function logout(){
 
+  Backendless.UserService.logout()
+   .then( userLoggedOut )
+   .catch( gotError );
 
-	var obID = document.getElementById("obID").innerHTML;
-	var foundSet = document.getElementById("setNo").value;
-	var wheelString = document.getElementById("wheelNumber").value;
-	var tpmsString = document.getElementById("tpmsNumber").value;
-
-	var wheel = parseInt(wheelString,10);
-	var tpms = parseInt(tpmsString,10);
-
-
-	console.log(obID);
-
-    if (wheel =='' && tpms !=''){
-		var wheelSet = {
-	    objectId:obID,
-	    tpm_no:tpms,
-		}
-
-		Backendless.Data.of( foundSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("wheelNumber").value = "";
-      	document.getElementById("tpmsNumber").value = "";
-      	getWheelInfo();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
-	else if (wheel !='' && tpms ==''){
-		var wheelSet = {
-	    objectId:obID,
-	    wheel_no:wheel,
-		}
-
-		Backendless.Data.of( foundSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("wheelNumber").value = "";
-      	document.getElementById("tpmsNumber").value = "";
-      	getWheelInfo();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
-	else if (wheel !='' && tpms !=''){
-		var wheelSet = {
-	    objectId:obID,
-	    wheel_no:wheel,
-	    tpm_no:tpms,
-		}
-
-		Backendless.Data.of( foundSet).save( wheelSet )
-  		.then( function( savedObject ) {
-      	console.log( "Wheel has been updated" );
-      	document.getElementById("wheelNumber").value = "";
-      	document.getElementById("tpmsNumber").value = "";
-      	getWheelInfo();
-    	})
-  		.catch( function( error ) {
-     	console.log( "an error has occurred " + error.message );
-   		});
-		}
+function userLoggedOut()
+{
+  console.log( "user has been logged out" );
+  window.location.href = "index.html";
 
 }
+
+function gotError( err ) // see more on error handling
+{
+  console.log( "error message - " + err.message );
+  console.log( "error code - " + err.statusCode );
+}
+
+}
+
+
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+function handleFileSelect(evt) 
+{
+   file = evt.target.files[0]; // FileList object
+}
+
+function uploadFileFunc()
+{
+  var callback = {};
+
+   callback.success = function(result)
+   {
+
+   }
+
+   callback.fault = function(result)
+   {
+       alert( "error - " + result.message );
+   }
+
+   Backendless.Files.upload( file, "my-folder" )
+    .then( function( fileURLs ) {
+       console.log( "File successfully uploaded. Path to download: " + result.fileURL );
+     })
+    .catch( function( error ) {
+       console.log( "error - " + error.message );
+     });
+}
+
+function patientScan(){
+cordova.plugins.barcodeScanner.scan(
+      function (result) {
+            document.getElementById("PID").value = result.text;
+            myPFunction();
+          
+      },
+      function (error) {
+          alert("Scanning failed: " + error);
+      },
+      {
+          preferFrontCamera : false, // iOS and Android
+          showFlipCameraButton : false, // iOS and Android
+          showTorchButton : false, // iOS and Android
+          torchOn: false, // Android, launch with the torch switched on (if available)
+          saveHistory: true, // Android, save scan history (default false)
+          prompt : "Place a barcode inside the scan area", // Android
+          resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+          formats : "QR", // default: all but PDF_417 and RSS_EXPANDED
+          orientation : "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+          disableAnimations : true, // iOS
+          disableSuccessBeep: false // iOS and Android
+      }
+   );
+};

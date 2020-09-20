@@ -25,7 +25,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-left w3-padding-large w3-hover-white w3-large w3-blue-grey" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="home.html" class="w3-bar-item w3-button w3-padding-large w3-blue-grey"><i class="fa fa-home fa-2x w3-padding-10 w3-text-white"></i></a>
     <a href="viewSets.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">View Sets</a>
-    <a href="updateSet.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Update Set</a>
+    <a href="updatSet.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Update Set</a>
     <a href="clear.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Clear</a>
     <a href="replace.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Replace or Add Wheel</a>
 
@@ -41,51 +41,16 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   </div>
 </div>
 
-<!-- Header -->
-<header class="w3-container w3-white w3-center" style="padding-top:60px; padding-bottom:10px; padding-right: 10px; padding-left: 10px">
-    <img src="img/logo_main.png" alt="logo_main">
-</header>
-<label for="cars">Choose a Set:</label>
-
-  <select id="setNo" onchange="getSet()">
-    <option value="0">Select Set</option>
-    <option value="set1">1</option>
-    <option value="set2">2</option>
-    <option value="set3">3</option>
-    <option value="set4">4</option>
-    <option value="set5">5</option>
-    <option value="set6">6</option>
-  </select>    
-
-        <table id="table" style="width:100%">
-          <tr>
-            <th>Position</th>
-            <th>Wheel No</th>
-            <th>TPM No</th>
-            <th>Tyre No</th>
-            <th>Weight</th>
-          </tr>
-        </table>
-
-        <table id="table2" hidden="true" style="width:100%">
-            <tr>
-              <th>Position</th>
-              <th>Wheel No</th>
-              <th>TPM No</th>
-              <th>Tyre No</th>
-              <th>Weight</th>
-            </tr>
-          </table>
-
-          <table id="table3" hidden="true" style="width:100%">
-            <tr>
-              <th>Position</th>
-              <th>Wheel No</th>
-              <th>TPM No</th>
-              <th>Tyre No</th>
-              <th>Weight</th>
-            </tr>
-          </table>
+<h1>Welcome</h1>
+    <label for="wheel">Name</label><br>
+    <input type="text" id="name" name="name" value=""></br></br>
+    <label for="wheel">Email</label><br>
+    <input type="email" id="email" name="email" value=""></br></br>
+    <label for="wheel">Password</label><br>
+    <input type="password" id="password" name="wheelNumber" value=""></br></br>
+    <label for="wheel">Confirm Password</label><br>
+    <input type="password" id="wheelNumber" name="wheelNumber" value=""></br></br>
+    <button class="mainButton" onclick="register()">Submit</button>
 
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button
