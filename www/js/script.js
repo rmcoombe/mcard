@@ -6,17 +6,20 @@ const PAGE_SIZE = 80
 const dataQuery = Backendless.DataQueryBuilder.create().setPageSize(PAGE_SIZE)
 //---------------------------------------------------------------------------------------------------
 
-var loggedIn = false;
 
+var loggedIn = window.localStorage.getItem('li');
+console.log (loggedIn);
 
 function homeScreen(){
-	if (loggedIn==false){
+	if (loggedIn==null){
 		document.getElementById("topBarHomeButton").style.display = "none";
 		document.getElementById("topBarMyCodeButton").style.display = "none";
 		document.getElementById("topBarMyCardButton").style.display = "none";
 		document.getElementById("StopBarMyCodeButton").style.display = "none";
 		document.getElementById("StopBarMyCardButton").style.display = "none";
-	}
+	}else if (loggedIn=="true"){
+    window.location.href = "myHome.html";
+  }
 
 }
 
@@ -61,6 +64,7 @@ var password=  document.getElementById("password").value;
 function userLoggedIn( user )
 {
   console.log( "user has logged in" );
+  localStorage.setItem('li', "true");
   window.location.href = "myHome.html";
 }
 
@@ -213,6 +217,7 @@ function logout(){
 function userLoggedOut()
 {
   console.log( "user has been logged out" );
+  localStorage.setItem('li', "");
   window.location.href = "index.html";
 
 }
