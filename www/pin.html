@@ -51,18 +51,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
          </br>
          </br>
          </br>
-         <button id="logoutButton" onclick="registerPage()">Register</button>
     </div>
   </div>
 </div>  
 
   <div class="w3-display-middle">
-    <label for="wheel">Email</label><br>
-    <input type="email" id="email" name="email" value=""></br></br>
-    <label for="wheel">Password</label><br>
-    <input type="password" id="password" name="wheelNumber" value=""></br></br>
+    <label for="wheel">PIN</label><br>
+   <input name="somename" id="pin" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "password" maxlength = "4" minlength = "4"  required/><input type="checkbox" onclick="pinView()">Show/Hide<br>
     
-    <button id="loginButton" onclick="login()">Login</button>
+     <button id="updatePinButton" onclick="updatePin()">Update</button>
 
 </div>
 <img src="img/logo.png" id="loginLogo" alt="" />
@@ -77,9 +74,19 @@ function myFunction() {
   }
 }
 
+function pinView() {
+  var x = document.getElementById("pin");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+
+
 
 document.addEventListener('DOMContentLoaded', function(event) {
-  homeScreen();
+ getPIN();
 })
 
 

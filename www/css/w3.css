@@ -303,6 +303,16 @@ div.form
   display:inline-block;
 }
 
+#updatePinButton{
+  background-color:#FCD94B;
+  font-size: 12px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 7px 14px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  display:inline-block;
+}
+
 #logo {
    position: absolute;
    width:80%;

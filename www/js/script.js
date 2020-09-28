@@ -15,17 +15,20 @@ function homeScreen(){
 		document.getElementById("topBarHomeButton").style.display = "none";
 		document.getElementById("topBarMyCodeButton").style.display = "none";
 		document.getElementById("topBarMyCardButton").style.display = "none";
-		document.getElementById("StopBarMyCodeButton").style.display = "none";
-		document.getElementById("StopBarMyCardButton").style.display = "none";
+		document.getElementById("StopBarMyPINButton").style.display = "none";
+		document.getElementById("StopBarMyiUPButton").style.display = "none";
+
+
 	}else if (loggedIn=="true"){
-    window.location.href = "myHome.html";
+    window.location.href = "index.html";
   }
 
 }
 
 
 function register(){
-var name= document.getElementById("name").value;
+var firstName= document.getElementById("firstName").value;
+var lastName= document.getElementById("lastName").value;
 var email=  document.getElementById("email").value;
 var password=  document.getElementById("password").value;
 
@@ -38,7 +41,7 @@ function userRegistered( user )
   })
  .catch( function( error ) {
   });
-  window.location.href = "myHome.html";
+  window.location.href = "index.html";
 }
 
 function gotError( err ) // see more on error handling
@@ -48,7 +51,8 @@ function gotError( err ) // see more on error handling
 }
 
 var user = new Backendless.User();
-user.name=name;
+user.firstName=firstName;
+user.lastName=lastName;
 user.email = email;
 user.password = password;
 
@@ -90,7 +94,10 @@ function uploadMedical(){
 	var medicalInformation3 = document.getElementById("medicalInformation3").value;
 	var medicalInformation4 = document.getElementById("medicalInformation4").value;
 	var medicalInformation5 = document.getElementById("medicalInformation5").value;
-
+  var patientPINStr = document.getElementById("pin").value;
+  var patientPIN= parseInt(patientPINStr,10);
+  var userObjectId = Backendless.LocalCache.get("current-user-id");
+  console.log(userObjectId);
 	
 	var patientEntry = {
         firstName: firstName,
@@ -101,7 +108,9 @@ function uploadMedical(){
         medicalInfo2: medicalInformation2,
         medicalInfo3: medicalInformation3,
         medicalInfo4: medicalInformation4,
-        medicalInfo5: medicalInformation5
+        medicalInfo5: medicalInformation5,
+        patientPin: patientPIN,
+        ownerId: userObjectId
     }
 	
 Backendless.Data.of( "patient" ).save( patientEntry )
@@ -129,7 +138,10 @@ function getMedical(){
     Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
 
     function processSetResults(devices){
-
+    if(devices.length<1){
+    document.getElementById("test").href="iUpload.html";
+    document.getElementById("editButton").innerHTML="Add"
+    }else{
 		for (var i = 0; i < devices.length; i++){
 		document.getElementById("PdateOfBirth").innerHTML=devices[i].dateOfBirth;
 		document.getElementById("PfullName").innerHTML=devices[i].firstName + " " + devices[i].lastName;
@@ -137,8 +149,10 @@ function getMedical(){
 		document.getElementById("PmedInfo1").innerHTML=devices[i].medicalInfo1;
 		document.getElementById("PmedInfo2").innerHTML=devices[i].medicalInfo2;
 		document.getElementById("PmedInfo3").innerHTML=devices[i].medicalInfo3;
+    document.getElementById("PmedInfo4").innerHTML=devices[i].medicalInfo4;
+    document.getElementById("PmedInfo5").innerHTML=devices[i].medicalInfo5;
 	}
-	
+	}
 }
 
 function error(err) {
@@ -151,6 +165,7 @@ function error(err) {
 
 function getCode(){
 	var userObjectId = Backendless.LocalCache.get("current-user-id");
+  console.log(userObjectId);
 	new QRCode(document.getElementById("qrcode"), userObjectId);
 
 }
@@ -218,6 +233,7 @@ function userLoggedOut()
 {
   console.log( "user has been logged out" );
   localStorage.setItem('li', "");
+  localStorage.setItem('obId', "");
   window.location.href = "index.html";
 
 }
@@ -287,3 +303,142 @@ cordova.plugins.barcodeScanner.scan(
       }
    );
 };
+
+
+function getEditMedical(){
+
+  var userObjectId = Backendless.LocalCache.get("current-user-id");
+  console.log(userObjectId);
+  var whereClause = "ownerId = '" + userObjectId + "'";
+    var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
+    Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
+
+    function processSetResults(devices){
+
+    for (var i = 0; i < devices.length; i++){
+    document.getElementById("dateOfBirth").value=devices[i].dateOfBirth;
+    document.getElementById("firstName").value=devices[i].firstName;
+    document.getElementById("lastName").value=devices[i].lastName;
+    document.getElementById("bloodType").value=devices[i].bloodType;
+    document.getElementById("medicalInformation1").value=devices[i].medicalInfo1;
+    document.getElementById("medicalInformation2").value=devices[i].medicalInfo2;
+    document.getElementById("medicalInformation3").value=devices[i].medicalInfo3;
+    document.getElementById("medicalInformation4").value=devices[i].medicalInfo4;
+    document.getElementById("medicalInformation5").value=devices[i].medicalInfo5;
+    localStorage.setItem('obId', devices[i].objectId);
+
+  }
+  
+}
+
+function error(err) {
+        alert("fail: " + error);
+    }
+  
+//
+}
+
+function editMedical(){
+  var userObjectId = window.localStorage.getItem('obId');
+  console.log(userObjectId);
+  var firstName = document.getElementById("firstName").value;
+  var lastName = document.getElementById("lastName").value;
+  var dateOfBirth = document.getElementById("dateOfBirth").value;
+  var bloodType = document.getElementById("bloodType").value;
+  var medicalInformation1 = document.getElementById("medicalInformation1").value;
+  var medicalInformation2 = document.getElementById("medicalInformation2").value;
+  var medicalInformation3 = document.getElementById("medicalInformation3").value;
+  var medicalInformation4 = document.getElementById("medicalInformation4").value;
+  var medicalInformation5 = document.getElementById("medicalInformation5").value;
+
+  
+  var patientEntry = {
+        objectId: userObjectId,
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth,
+        bloodType: bloodType,
+        medicalInfo1: medicalInformation1,
+        medicalInfo2: medicalInformation2,
+        medicalInfo3: medicalInformation3,
+        medicalInfo4: medicalInformation4,
+        medicalInfo5: medicalInformation5
+    }
+  
+Backendless.Data.of( "patient" ).save( patientEntry )
+  .then( function( savedObject ) {
+     
+      console.log( "Patient Added" );
+      swal("Success!", "Medical Information Updated", "success");
+    })
+  .catch( function( error ) {
+      console.log( "an error has occurred " + error.message );
+    });
+
+}
+
+function registerPage(){
+  window.location.href = "register.html";
+}
+
+
+function count(){
+var userOwnerId = Backendless.LocalCache.get("current-user-id");
+var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( "ownerId = '"+ userOwnerId+ "'" );
+
+Backendless.Data.of( "patient" ).getObjectCount( queryBuilder )
+ .then( function( count ) {
+   console.log( "found objects matching query in the Order table - " + count );
+  })
+ .catch( function( error ) {
+   console.log( "error - " + error.message );
+  });
+}
+
+function getPIN(){
+
+  var userObjectId = Backendless.LocalCache.get("current-user-id");
+  var whereClause = "ownerId = '" + userObjectId + "'";
+    var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
+    Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
+    function processSetResults(devices){
+    for (var i = 0; i < devices.length; i++){
+    document.getElementById("pin").value=devices[i].patientPin;
+    console.log(devices[i].objectId);
+    localStorage.setItem('obIdPIN', devices[i].objectId);
+
+  }
+}
+
+function error(err) {
+        alert("fail: " + error);
+    }
+  
+//
+}
+
+
+function updatePin(){
+  var userObjectId = window.localStorage.getItem('obIdPIN');
+  console.log(userObjectId);
+  var patientPinStr = document.getElementById("pin").value;
+  var patientPin = parseInt(patientPinStr,10);
+
+  
+  var patientEntry = {
+        objectId: userObjectId,
+        patientPin: patientPin,
+
+    }
+  
+Backendless.Data.of( "patient" ).save( patientEntry )
+  .then( function( savedObject ) {
+     
+      console.log( "Patient PIN Edited" );
+      swal("Success!", "PIN Updated", "success");
+    })
+  .catch( function( error ) {
+      console.log( "an error has occurred " + error.message );
+    });
+
+}
