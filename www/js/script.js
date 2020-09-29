@@ -20,7 +20,7 @@ function homeScreen(){
 
 
 	}else if (loggedIn=="true"){
-    window.location.href = "index.html";
+    window.location.href = "myHome.html";
   }
 
 }
