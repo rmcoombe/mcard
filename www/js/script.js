@@ -13,8 +13,8 @@ console.log (loggedIn);
 function homeScreen(){
 	if (loggedIn==null){
 		document.getElementById("topBarHomeButton").style.display = "none";
-		document.getElementById("topBarMyCodeButton").style.display = "none";
-		document.getElementById("topBarMyCardButton").style.display = "none";
+		document.getElementById("StopBarMyCodeButton").style.display = "none";
+		document.getElementById("StopBarMyCardButton").style.display = "none";
 		document.getElementById("StopBarMyPINButton").style.display = "none";
 		document.getElementById("StopBarMyiUPButton").style.display = "none";
 
