@@ -53,8 +53,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 </br>
 </br>
 </br>
-<div class="row" width="100%">
+<div class="row" id="buttons" hidden="true" width="100%">
         <div class="column">
+          <span class="notranslate"><a id="test" href="index.html"><button id="editButton" >Back</button></a></span>
         </div>
         <div class="column">
           <div align="right" id="google_translate_element"></div>
@@ -63,24 +64,25 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div id="row1" hidden="true">
     <div class="row">
         <div class="column">
-            <img src="img/placeholder.png" alt="placeholder">
+          <img src="img/placeholder.png" id="patientImage" alt="placeholder">
         </div>
         <div class="column">
-          <i id="PfullName"></i></br>
-          <i id="PdateOfBirth"></i></br>
-          <i id="PbloodType"></i></br>
-    </div>
+         <i id="fullName">Name: </i><i id="PfullName"></i></br>
+         <i id="fullName">D.o.B:</i><i id="PdateOfBirth"></i></br>
+         <i id="fullName">Blood Type:</i> <i id="PbloodType"></i></br>
+        </div>
+      </div>
   </div>
-</div>  
 
 
-<div id="row2" class="w3-display-left" hidden="true">
-          <h2>Medical Information</h2>
+<div id="row2" hidden="true" class="w3-display-left">
+          <h2 style="white-space: nowrap;">Medical Information</h2>
           <i id="PmedInfo1"></i></br>
           <i id="PmedInfo2"></i></br>
           <i id="PmedInfo3"></i></br>
+          <i id="PmedInfo4"></i></br>
+          <i id="PmedInfo5"></i></br>
 </div>
-<input type="text" hidden="true" id="PID"></br>
  
 
 <img id="qrimage"src="img/QrImage.png" onclick="patientScan()" class="w3-display-bottommiddle" alt="scan_image">

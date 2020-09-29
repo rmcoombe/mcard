@@ -200,6 +200,7 @@ function myPFunction() {
     document.getElementById("PmedInfo1").innerHTML=devices[i].medicalInfo1;
     document.getElementById("PmedInfo2").innerHTML=devices[i].medicalInfo2;
     document.getElementById("PmedInfo3").innerHTML=devices[i].medicalInfo3;
+    document.getElementById("buttons").hidden=false;
     document.getElementById("row1").hidden=false;
     document.getElementById("row2").hidden=false;
     document.getElementById("qrimage").hidden=true;
