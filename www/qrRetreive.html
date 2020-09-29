@@ -12,6 +12,15 @@
 <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
 <script src="js/index.js" type="text/javascript"></script>
 <script src="js/script.js" type="text/javascript"></script>
+ <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', includedLanguages: 'en,es,pl,pt,zh-CN,zh-TW,ar,so,ru,hy,ko,vi,tl',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
@@ -41,8 +50,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
   </div>
 </div>
-
-<h1>Welcome</h1>
+<div class="row" width="100%">
+        <div class="column">
+          <span class="notranslate"><a id="test" href="upload.html"><button id="editButton" >Edit</button></a></span>
+        </div>
+        <div class="column">
+          <div align="right" id="google_translate_element"></div>
+        </div>
+</div>
 <div id="row1" hidden="true">
     <div class="row">
         <div class="column">
@@ -88,6 +103,40 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 
 </script>
+<script>
+        $('document').ready(function () {
+            $('#google_translate_element').on("click", function () {
+
+                // Change font family and color
+                $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div") //, .goog-te-menu2 *
+                .css({
+                    'color': '#544F4B',
+                    'background-color': '#e3e3ff',
+                    'font-family': '"Open Sans",Helvetica,Arial,sans-serif'
+                });
+
+                // Change hover effects  #e3e3ff = white
+                $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
+                    $(this).css('background-color', '#17548d').find('span.text').css('color', '#e3e3ff');
+                }, function () {
+                    $(this).css('background-color', '#e3e3ff').find('span.text').css('color', '#544F4B');
+                });
+
+                // Change Google's default blue border
+                $("iframe").contents().find('.goog-te-menu2').css('border', '1px solid #17548d');
+
+                $("iframe").contents().find('.goog-te-menu2').css('background-color', '#e3e3ff');
+
+                // Change the iframe's box shadow
+                $(".goog-te-menu-frame").css({
+                    '-moz-box-shadow': '0 3px 8px 2px #666666',
+                    '-webkit-box-shadow': '0 3px 8px 2px #666',
+                    'box-shadow': '0 3px 8px 2px #666'
+                });
+            });
+        });
+    </script>
+
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 

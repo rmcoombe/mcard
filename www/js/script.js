@@ -11,7 +11,7 @@ var loggedIn = window.localStorage.getItem('li');
 console.log (loggedIn);
 
 function homeScreen(){
-	if (loggedIn==null){
+	if (loggedIn!="true"){
 		document.getElementById("topBarHomeButton").style.display = "none";
 		document.getElementById("StopBarMyCodeButton").style.display = "none";
 		document.getElementById("StopBarMyCardButton").style.display = "none";
@@ -232,8 +232,8 @@ function logout(){
 function userLoggedOut()
 {
   console.log( "user has been logged out" );
-  localStorage.setItem('li', "");
-  localStorage.setItem('obId', "");
+  localStorage.setItem('li', null);
+  localStorage.setItem('obId', null);
   window.location.href = "index.html";
 
 }
