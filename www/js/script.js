@@ -162,7 +162,6 @@ function error(err) {
 
 function getCode(){
 	var userObjectId = Backendless.LocalCache.get("current-user-id");
-  console.log(userObjectId);
 	new QRCode(document.getElementById("qrcode"), userObjectId);
 
 }
