@@ -8,7 +8,6 @@ const dataQuery = Backendless.DataQueryBuilder.create().setPageSize(PAGE_SIZE)
 
 
 var loggedIn = window.localStorage.getItem('li');
-console.log (loggedIn);
 
 function homeScreen(){
 	if (loggedIn!="true"){
@@ -74,8 +73,8 @@ function userLoggedIn( user )
 
 function gotError( err ) // see more on error handling
 {
-  console.log( "error message - " + err.message );
-  console.log( "error code - " + err.statusCode );
+  
+  swal("Uh oh!", err.message, "error");
 }
 
 Backendless.UserService.login( login, password, true )
@@ -97,7 +96,6 @@ function uploadMedical(){
   var patientPINStr = document.getElementById("pin").value;
   var patientPIN= parseInt(patientPINStr,10);
   var userObjectId = Backendless.LocalCache.get("current-user-id");
-  console.log(userObjectId);
 	
 	var patientEntry = {
         firstName: firstName,
@@ -116,7 +114,10 @@ function uploadMedical(){
 Backendless.Data.of( "patient" ).save( patientEntry )
   .then( function( savedObject ) {
   	 
-      console.log( "Patient Added" );
+      console.log( "Patient Updated" );
+      swal("Nice!", "You've updated your Information", "success");
+
+
     })
   .catch( function( error ) {
       console.log( "an error has occurred " + error.message );
@@ -124,10 +125,6 @@ Backendless.Data.of( "patient" ).save( patientEntry )
 
 }
 
-function test(){
-	var userObjectId = Backendless.LocalCache.get("current-user-id");
-	alert(userObjectId);
-}
 
 
 function getMedical(){
@@ -205,6 +202,8 @@ function myPFunction() {
     document.getElementById("row2").hidden=false;
     document.getElementById("qrimage").hidden=true;
     document.getElementById("PID").hidden=true;
+    document.getElementById("scanTitle").hidden=true;
+    document.getElementById("scanIns").hidden=true;
   }else{swal("Uh oh!", "That is not the correct pin", "error");}
   }
   
@@ -230,11 +229,13 @@ function logout(){
    .then( userLoggedOut )
    .catch( gotError );
 
+
 function userLoggedOut()
 {
   console.log( "user has been logged out" );
   localStorage.setItem('li', null);
   localStorage.setItem('obId', null);
+  localStorage.setItem('obIdPIN', null);
   window.location.href = "index.html";
 
 }
@@ -309,7 +310,6 @@ cordova.plugins.barcodeScanner.scan(
 function getEditMedical(){
 
   var userObjectId = Backendless.LocalCache.get("current-user-id");
-  console.log(userObjectId);
   var whereClause = "ownerId = '" + userObjectId + "'";
     var queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause( whereClause );
     Backendless.Data.of("patient").find(queryBuilder).then(processSetResults).catch(error);
@@ -341,7 +341,6 @@ function error(err) {
 
 function editMedical(){
   var userObjectId = window.localStorage.getItem('obId');
-  console.log(userObjectId);
   var firstName = document.getElementById("firstName").value;
   var lastName = document.getElementById("lastName").value;
   var dateOfBirth = document.getElementById("dateOfBirth").value;
@@ -369,8 +368,8 @@ function editMedical(){
 Backendless.Data.of( "patient" ).save( patientEntry )
   .then( function( savedObject ) {
      
-      console.log( "Patient Added" );
-      swal("Success!", "Medical Information Updated", "success");
+      console.log( "Patient Updated" );
+      window.location.href = "retreive.html";
     })
   .catch( function( error ) {
       console.log( "an error has occurred " + error.message );
@@ -405,7 +404,6 @@ function getPIN(){
     function processSetResults(devices){
     for (var i = 0; i < devices.length; i++){
     document.getElementById("pin").value=devices[i].patientPin;
-    console.log(devices[i].objectId);
     localStorage.setItem('obIdPIN', devices[i].objectId);
 
   }
@@ -421,7 +419,6 @@ function error(err) {
 
 function updatePin(){
   var userObjectId = window.localStorage.getItem('obIdPIN');
-  console.log(userObjectId);
   var patientPinStr = document.getElementById("pin").value;
   var patientPin = parseInt(patientPinStr,10);
 

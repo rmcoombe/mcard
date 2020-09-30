@@ -54,10 +54,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     </div>
   </div>
 </div>  
-
+<p>Your PIN is the four digit code that others will need to input in order to view your MyCode</p>
+<p>Here you can view your PIN as well as reset it. To reset it simply delete the current code and choose another and hit Update </p>
   <div class="w3-display-middle">
-    <label for="wheel">PIN</label><br>
-   <input name="somename" id="pin" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "password" maxlength = "4" minlength = "4"  required/><input type="checkbox" onclick="pinView()">Show/Hide<br>
+    <h1 align="centre">PIN</h1><br>
+   <input  name="somename" id="pin" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "password" maxlength = "4" minlength = "4"  required/><input type="checkbox" onclick="pinView()"><label id="lbl" for="shpin">Show</label><br/><br/>
     
      <button id="updatePinButton" onclick="updatePin()">Update</button>
 
@@ -78,8 +79,10 @@ function pinView() {
   var x = document.getElementById("pin");
   if (x.type === "password") {
     x.type = "text";
+    document.getElementById("lbl").innerHTML="Hide"
   } else {
     x.type = "password";
+    document.getElementById("lbl").innerHTML="Show"
   }
 }
 

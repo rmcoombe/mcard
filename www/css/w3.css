@@ -24,7 +24,7 @@ legend{color:inherit;display:table;max-width:100%;padding:0;white-space:normal}t
 [type=search]::-webkit-search-decoration{-webkit-appearance:none}
 ::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
 /* End extract */
-html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+html,body{min-height:100%;height:100%;font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
 h1{font-size:36px}h2{font-size:30px}h3{font-size:24px}h4{font-size:20px}h5{font-size:18px}h6{font-size:16px}.w3-serif{font-family:serif}
 h1,h2,h3,h4,h5,h6{font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}.w3-wide{letter-spacing:4px}
 hr{border:0;border-top:1px solid #eee;margin:20px 0}
@@ -305,7 +305,27 @@ div.form
 
 #updatePinButton{
   background-color:#FCD94B;
-  font-size: 12px;
+  font-size: 18px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 14px 28px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  display:inline-block;
+}
+
+#submitRegisterButton {
+  background-color:#FCD94B;
+  font-size: 24px;
+  border: none; /* Remove borders */
+  color: white; /* Add a text color */
+  padding: 14px 28px; /* Add some padding */
+  cursor: pointer; /* Add a pointer cursor on mouse-over */
+  display:inline-block;
+}
+
+#uploadSubmit {
+  background-color:#FCD94B;
+  font-size: 24px;
   border: none; /* Remove borders */
   color: white; /* Add a text color */
   padding: 7px 14px; /* Add some padding */
@@ -338,6 +358,10 @@ div.form
 
 #patientImage{
 	width:90%;
+}
+
+#loginForm{
+	
 }
 
 /* OVERRIDE GOOGLE TRANSLATE WIDGET CSS BEGIN */
@@ -401,3 +425,9 @@ body {
     top: 0px !important;
 }
 
+#pin{
+    font-size:30px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 4px;
+}

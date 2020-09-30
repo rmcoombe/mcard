@@ -42,7 +42,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   </div>
 </div>
 <br><br>
-<h1>Welcome</h1>
+<h1>Edit</h1>
+<p>Ammend any relevant fields and click submit</p>
     <label for="wheel">First Name</label><br>
     <input type="text" id="firstName" name="firstName" value=""></br>
     <label for="wheel">Last Name</label><br>
@@ -63,8 +64,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <textarea cols="30" rows="2" id="medicalInformation5" placeholder="Max character 250" value=""></textarea></br>
     <label for="files">Upload Photo</label><br>
     <input type="file" id="files" name="files[]" multiple />
-    <input type="button" onclick="uploadFileFunc()"; return false; value="Upload File"/><br>
-    <button class="mainButton" onclick="editMedical()">Submit</button>
+    <input type="button" onclick="uploadFileFunc()"; return false; value="Upload File"/><br><br>
+    <button class="mainButton" id="uploadSubmit" onclick="editMedical()">Submit</button>
 
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button
